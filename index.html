@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Les alumni de Conversations Inspirantes · Cohorte 1</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="masthead shell">
+    <img src="assets/logo-fondation.png" alt="Fondation HYSTERESIS" width="144" height="75">
+    <nav class="header-links" aria-label="Navigation principale">
+      <a href="#explorer">Les alumni</a>
+      <button id="selection-link" type="button">Ma sélection <span id="saved-count">0</span></button>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="intro" aria-labelledby="page-title">
+      <span class="cohort">Cohorte 1</span>
+      <h1 id="page-title">Les alumni de <span>Conversations Inspirantes</span></h1>
+      <p>Des talents, des trajectoires et des possibilités</p>
+      <a class="explore-link" href="#explorer">Explorer les profils <span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section aria-label="Trombinoscope des alumni">
+      <ul id="portraits" class="portraits"></ul>
+      <button id="surprise" class="primary surprise" type="button">Découvrir un parcours <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section id="explorer" class="explorer" aria-labelledby="explore-title">
+      <h2 id="explore-title">Explorer les parcours</h2>
+      <div class="controls">
+        <label>Rechercher un profil
+          <input id="search" type="search" placeholder="Nom, domaine ou compétence">
+        </label>
+        <label>Type d’opportunité
+          <select id="opportunity"><option value="">Toutes les opportunités</option></select>
+        </label>
+        <button id="reset" type="button">Réinitialiser</button>
+      </div>
+      <div class="results-bar">
+        <p id="count" role="status"></p>
+        <label class="selection-filter"><input id="saved-only" type="checkbox"> Ma sélection uniquement</label>
+      </div>
+      <ul id="results" class="results"></ul>
+    </section>
+    <noscript>Activez JavaScript pour explorer les profils.</noscript>
+  </main>
+
+  <footer class="shell footer">Fondation HYSTERESIS <span>Conversations Inspirantes</span></footer>
+
+  <dialog id="profile" aria-labelledby="profile-name">
+    <div class="dialog-bar">
+      <button id="save-profile" type="button" aria-pressed="false">Ajouter à ma sélection</button>
+      <button id="close" type="button" aria-label="Fermer la fiche" autofocus>Fermer <span aria-hidden="true">×</span></button>
+    </div>
+    <article id="profile-content"></article>
+    <nav class="profile-nav" aria-label="Navigation entre les profils">
+      <button id="previous" type="button">← Précédent</button>
+      <button id="next" type="button">Suivant →</button>
+    </nav>
+  </dialog>
+</body>
+</html>
