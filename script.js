@@ -311,6 +311,7 @@ function portraitImage(profile) {
   const image = element('img');
   image.src = 'assets/' + profile.id + '.webp';
   image.alt = 'Portrait de ' + nameOf(profile);
+  image.decoding = 'async';
   return image;
 }
 
@@ -337,14 +338,29 @@ for (const profile of profiles) {
   portraits.append(item);
 }
 
+const opportunityIndex = document.querySelector('#opportunity-index');
 for (const category of opportunities) {
   opportunity.add(new Option(category, category));
+  const matches = profiles.filter(profile => profile.categories.includes(category));
+  const item = element('li');
+  const button = element('button', 'opportunity-card');
+  button.type = 'button';
+  button.append(element('strong', '', category), element('span', '', matches.length + (matches.length === 1 ? ' profil' : ' profils')));
+  button.addEventListener('click', () => {
+    opportunity.value = category;
+    search.value = '';
+    savedOnly.checked = false;
+    filterProfiles();
+    opportunity.focus();
+  });
+  item.append(button);
+  opportunityIndex.append(item);
 }
 
 function filterProfiles() {
   const terms = normalize(search.value).split(/\s+/).filter(Boolean);
   visible = profiles.filter(profile => {
-    const searchable = normalize([nameOf(profile), profile.domain, ...profile.skills].join(' '));
+    const searchable = normalize([nameOf(profile), profile.domain, profile.status, ...profile.skills, ...profile.categories].join(' '));
     return terms.every(term => searchable.includes(term))
       && (!opportunity.value || profile.categories.includes(opportunity.value))
       && (!savedOnly.checked || saved.has(profile.id));
@@ -359,7 +375,8 @@ function filterProfiles() {
     caption.append(element('strong', '', nameOf(profile)), element('span', 'result-domain', profile.domain));
     const action = element('span', 'result-action', 'Voir le parcours');
     action.append(arrow);
-    caption.append(action);
+    const categoryText = element('span', 'result-category', profile.categories.join(' · '));
+    caption.append(categoryText, action);
     link.append(portraitImage(profile), caption);
     item.append(link);
     results.append(item);
@@ -394,14 +411,16 @@ function showProfile(profile) {
   const title = element('h2', '', nameOf(profile));
   title.id = 'profile-name';
   title.tabIndex = -1;
-  heading.append(title, element('p', '', profile.domain + ' · ' + profile.status));
+  heading.append(title, element('p', 'profile-domain', profile.domain),
+    element('p', 'profile-status', profile.status),
+    element('p', 'profile-category', profile.categories.join(' · ')));
   head.append(portraitImage(profile), heading);
   body.append(head, element('p', '', profile.intro));
 
   const skills = element('ul', 'skills');
   skills.setAttribute('aria-label', 'Compétences');
   for (const skill of profile.skills) skills.append(element('li', '', skill));
-  body.append(skills);
+  body.append(element('h3', 'profile-subtitle', 'Compétences'), skills);
 
   for (const section of profile.sections) {
     const block = element('section', 'profile-section');
@@ -409,6 +428,7 @@ function showProfile(profile) {
     body.append(block);
   }
 
+  body.append(element('h3', 'profile-subtitle contact-heading', 'Contacts et réseaux sociaux'));
   const contacts = element('nav', 'contacts');
   contacts.setAttribute('aria-label', 'Contacts et réseaux sociaux');
   for (const [label, url] of Object.entries(profile.links)) {

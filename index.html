@@ -8,11 +8,14 @@
   <script src="script.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#explorer">Aller aux profils</a>
   <header class="masthead shell">
     <img src="assets/logo-fondation.png" alt="Fondation HYSTERESIS" width="144" height="75">
     <nav class="header-links" aria-label="Navigation principale">
       <a href="#explorer">Les alumni</a>
-      <!-- <button id="selection-link" type="button">Ma sélection <span id="saved-count">0</span></button> -->
+      <a href="#opportunites">Opportunités</a>
+      <a href="assets/Catalogue_alumni_Cohorte_1.pdf" download>Catalogue PDF</a>
+      <button id="selection-link" type="button">Ma sélection <span id="saved-count">0</span></button>
     </nav>
   </header>
 
@@ -21,15 +24,18 @@
       <span class="cohort">Cohorte 1</span>
       <h1 id="page-title">Les alumni de <span>Conversations Inspirantes</span></h1>
       <p>Des talents, des trajectoires et des possibilités</p>
-      <a class="explore-link" href="#explorer">Explorer les profils <span aria-hidden="true">↓</span></a>
+      <div class="hero-actions">
+        <a class="primary explore-link" href="#explorer">Explorer le catalogue <span aria-hidden="true">↓</span></a>
+        <button id="surprise" type="button">Découvrir un parcours <span aria-hidden="true">↗</span></button>
+      </div>
     </section>
 
-    <section aria-label="Trombinoscope des alumni">
+    <section aria-labelledby="portrait-title">
+      <h2 id="portrait-title" class="section-title">Les sept profils</h2>
       <ul id="portraits" class="portraits"></ul>
-      <button id="surprise" class="primary surprise" type="button">Découvrir un parcours <span aria-hidden="true">↗</span></button>
     </section>
 
-    <section id="explorer" class="explorer" aria-labelledby="explore-title">
+    <section id="explorer" class="explorer" aria-labelledby="explore-title" tabindex="-1">
       <h2 id="explore-title">Explorer les parcours</h2>
       <div class="controls">
         <label>Rechercher un profil
@@ -45,6 +51,10 @@
         <label class="selection-filter"><input id="saved-only" type="checkbox"> Ma sélection uniquement</label>
       </div>
       <ul id="results" class="results"></ul>
+    </section>
+    <section id="opportunites" class="explorer opportunity-section" aria-labelledby="opportunity-title">
+      <h2 id="opportunity-title">Index des opportunités</h2>
+      <ul id="opportunity-index" class="opportunity-index"></ul>
     </section>
     <noscript>Activez JavaScript pour explorer les profils.</noscript>
   </main>
